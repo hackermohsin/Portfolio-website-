@@ -20,6 +20,10 @@
   .section { @apply py-20 md:py-24; }
   .input { @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition; }
   .section-title h2 { @apply pb-5; }
+
+  /* Frosted glass utilities */
+  .glass { @apply bg-white/60 backdrop-blur-lg border border-white/30 shadow-lg; }
+  .glass-strong { @apply bg-white/70 backdrop-blur-2xl border border-white/40 shadow-xl; }
 }
 
 /* Reduced motion */
