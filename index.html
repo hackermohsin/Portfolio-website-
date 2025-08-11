@@ -94,10 +94,43 @@
       transform: rotate(90deg);
     }
     
-    /* Smooth transitions for mobile nav */
+    /* Enhanced frosted glass effects */
     #navmenu {
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    
+    /* Mobile navigation glass morphism */
+    #navmenu .xl\\:hidden {
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    }
+    
+    /* Glass button hover effects */
+    .mobile-nav-toggle:hover,
+    #navmenu button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    /* Navigation link glass effects */
+    #navmenu a .xl\\:hidden {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #navmenu a .xl\\:hidden::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    #navmenu a:hover .xl\\:hidden::before {
+      left: 100%;
     }
     
     /* Focus styles for accessibility */
@@ -105,6 +138,22 @@
     #navmenu button:focus-visible {
       outline: 2px solid #2563eb;
       outline-offset: 2px;
+    }
+    
+    /* Smooth entrance animation for mobile nav */
+    @keyframes slideInFromLeft {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    body.mobile-nav-active #navmenu {
+      animation: slideInFromLeft 0.5s ease-out;
     }
   </style>
 </head>
@@ -117,29 +166,90 @@
           <h1 class="text-3xl font-bold text-heading group-hover:text-accent transition-colors duration-300">Medilab</h1>
         </a>
       
-      <nav id="navmenu" class="fixed inset-0 glass z-50 transform -translate-x-full opacity-0 pointer-events-none transition-all duration-300 ease-in-out xl:relative xl:translate-x-0 xl:opacity-100 xl:pointer-events-auto xl:bg-transparent xl:inset-auto xl:z-auto">
-        <!-- Mobile close button -->
-        <button class="xl:hidden absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-heading hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" onclick="document.querySelector('.mobile-nav-toggle').click()" aria-label="Close navigation">
+      <nav id="navmenu" class="fixed inset-0 z-50 transform -translate-x-full opacity-0 pointer-events-none transition-all duration-500 ease-out xl:relative xl:translate-x-0 xl:opacity-100 xl:pointer-events-auto xl:bg-transparent xl:inset-auto xl:z-auto">
+        <!-- Mobile frosted glass overlay -->
+        <div class="xl:hidden absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-white/5 backdrop-blur-2xl border border-white/20"></div>
+        
+        <!-- Decorative background elements -->
+        <div class="xl:hidden absolute inset-0 overflow-hidden">
+          <!-- Floating circles -->
+          <div class="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
+          <div class="absolute top-40 right-32 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+          <div class="absolute bottom-32 left-32 w-40 h-40 bg-white/5 rounded-full blur-xl"></div>
+          <div class="absolute bottom-20 right-20 w-28 h-28 bg-white/5 rounded-full blur-xl"></div>
+          
+          <!-- Subtle grid pattern -->
+          <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+        
+        <!-- Mobile close button with glass effect -->
+        <button class="xl:hidden absolute top-8 right-8 w-12 h-12 flex items-center justify-center text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-2xl hover:bg-white/30 hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2 z-10" onclick="document.querySelector('.mobile-nav-toggle').click()" aria-label="Close navigation">
           <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         
-        <ul class="flex flex-col items-center justify-center h-full space-y-8 xl:flex-row xl:space-y-0 xl:space-x-8">
-          <li><a href="#hero" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Home</a></li>
-          <li><a href="#about" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">About</a></li>
-          <li><a href="#services" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Services</a></li>
-          <li><a href="#departments" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Departments</a></li>
-          <li><a href="#doctors" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Doctors</a></li>
-          <li><a href="#contact" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Contact</a></li>
-        </ul>
+        <!-- Navigation content container -->
+        <div class="relative z-10 flex flex-col items-center justify-center h-full xl:flex-row xl:items-center">
+          <!-- Mobile title -->
+          <div class="xl:hidden absolute top-8 left-8">
+            <h2 class="text-2xl font-bold text-heading bg-white/20 backdrop-blur-lg px-6 py-3 rounded-2xl border border-white/30 shadow-xl">Menu</h2>
+          </div>
+          
+          <!-- Navigation links with enhanced glass effects -->
+          <ul class="flex flex-col items-center justify-center space-y-10 xl:flex-row xl:space-y-0 xl:space-x-8">
+            <li class="group">
+              <a href="#hero" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">Home</span>
+                <span class="xl:block">Home</span>
+              </a>
+            </li>
+            <li class="group">
+              <a href="#about" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">About</span>
+                <span class="xl:block">About</span>
+              </a>
+            </li>
+            <li class="group">
+              <a href="#services" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">Services</span>
+                <span class="xl:block">Services</span>
+                </a>
+            </li>
+            <li class="group">
+              <a href="#departments" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">Departments</span>
+                <span class="xl:block">Departments</span>
+              </a>
+            </li>
+            <li class="group">
+              <a href="#doctors" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">Doctors</span>
+                <span class="xl:block">Doctors</span>
+              </a>
+            </li>
+            <li class="group">
+              <a href="#contact" class="relative block text-3xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-4 xl:py-2 xl:rounded-xl xl:hover:bg-accent/10 xl:backdrop-blur-sm">
+                <span class="xl:hidden bg-white/20 backdrop-blur-lg px-8 py-4 rounded-2xl border border-white/30 shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 hover:-translate-y-1 transition-all duration-300 block">Contact</span>
+                <span class="xl:block">Contact</span>
+              </a>
+            </li>
+          </ul>
+          
+          <!-- Mobile decorative elements -->
+          <div class="xl:hidden absolute bottom-8 left-8 right-8">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 text-center">
+              <p class="text-sm text-heading/80">Navigate through our services</p>
+            </div>
+            </div>
+        </div>
       </nav>
 
       <div class="flex items-center space-x-4">
         <a class="hidden sm:inline-block btn btn-primary hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" href="#appointment">Make an Appointment</a>
-        <button class="xl:hidden flex items-center justify-center w-10 h-10 text-heading hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 mobile-nav-toggle z-50 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu">
-          <svg class="w-6 h-6 open-icon transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-          <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        <button class="xl:hidden flex items-center justify-center w-12 h-12 text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 transition-all duration-300 mobile-nav-toggle z-50 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu">
+          <svg class="w-6 h-6 open-icon transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+          <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>
