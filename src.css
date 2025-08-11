@@ -21,6 +21,8 @@
   p { @apply leading-relaxed; }
   
   /* Anchor offset for sticky header */
+  :root { scroll-padding-top: 6.5rem; }
+  @media (min-width: 768px) { :root { scroll-padding-top: 7.5rem; } }
   section[id] { @apply scroll-mt-24 md:scroll-mt-28; }
 }
 

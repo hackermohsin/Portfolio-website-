@@ -48,6 +48,7 @@
      */
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const navMenu = document.getElementById('navmenu');
+    const headerEl = document.getElementById('header');
     if (mobileNavToggle && navMenu) {
       mobileNavToggle.setAttribute('aria-controls', 'navmenu');
       mobileNavToggle.setAttribute('aria-expanded', 'false');
@@ -76,8 +77,19 @@
         }
       });
       
+      // Smooth scroll with sticky header offset for in-page anchors
       document.querySelectorAll('#navmenu a').forEach(navlink => {
-        navlink.addEventListener('click', () => {
+        navlink.addEventListener('click', (e) => {
+          const href = navlink.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            const target = document.querySelector(href);
+            if (target) {
+              e.preventDefault();
+              const headerHeight = headerEl ? headerEl.offsetHeight : 0;
+              const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
+              window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            }
+          }
           if (document.body.classList.contains('mobile-nav-active')) {
             closeNav();
           }
