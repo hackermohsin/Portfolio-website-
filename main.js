@@ -47,16 +47,24 @@
      * Mobile Nav Toggle
      */
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    if (mobileNavToggle) {
+    const navMenu = document.getElementById('navmenu');
+    if (mobileNavToggle && navMenu) {
+      mobileNavToggle.setAttribute('aria-controls', 'navmenu');
+      mobileNavToggle.setAttribute('aria-expanded', 'false');
+
       mobileNavToggle.addEventListener('click', function(event) {
         event.preventDefault();
-        document.body.classList.toggle('mobile-nav-active');
+        const isActive = document.body.classList.toggle('mobile-nav-active');
+        navMenu.classList.toggle('is-open', isActive);
+        mobileNavToggle.setAttribute('aria-expanded', String(isActive));
       });
       
       document.querySelectorAll('#navmenu a').forEach(navlink => {
         navlink.addEventListener('click', () => {
           if (document.body.classList.contains('mobile-nav-active')) {
             document.body.classList.remove('mobile-nav-active');
+            navMenu.classList.remove('is-open');
+            mobileNavToggle.setAttribute('aria-expanded', 'false');
           }
         });
       });
