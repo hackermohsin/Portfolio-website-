@@ -193,7 +193,7 @@
 
       <div class="flex items-center space-x-4">
         <a class="hidden sm:inline-block btn btn-primary hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" href="#appointment">Make an Appointment</a>
-        <label for="mobileMenuCheckbox" class="xl:hidden flex items-center justify-center w-12 h-12 text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 transition-all duration-300 mobile-nav-toggle z-50 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu">
+        <label for="mobileMenuCheckbox" class="xl:hidden flex items-center justify-center w-12 h-12 text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 transition-all duration-300 mobile-nav-toggle z-50 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu" aria-controls="mobileMenuOverlay" aria-expanded="false" role="button">
           <svg class="w-6 h-6 open-icon transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
           <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </label>
@@ -515,8 +515,9 @@
 
   <!-- Mobile full-screen overlay (moved outside header to avoid stacking issues) -->
   <div id="mobileMenuOverlay" class="xl:hidden fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-md opacity-0 invisible pointer-events-none transition-opacity duration-200">
+    <label for="mobileMenuCheckbox" class="absolute inset-0 cursor-default" aria-hidden="true"></label>
     <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div id="mobileMenuPanel" class="w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 -translate-y-2 scale-95 transition-all duration-200">
+      <div id="mobileMenuPanel" class="w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 -translate-y-2 scale-95 transition-all duration-200" role="dialog" aria-modal="true" aria-label="Mobile menu">
         <div class="py-2 flex flex-col">
           <a href="#hero" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Home</a>
           <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">About</a>

@@ -54,16 +54,27 @@
     const headerEl = document.getElementById('header');
 
     if (mobileMenuCheckbox) {
+      const toggleAria = () => {
+        const toggle = document.querySelector('label.mobile-nav-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', mobileMenuCheckbox.checked ? 'true' : 'false');
+      };
+      toggleAria();
+      mobileMenuCheckbox.addEventListener('change', toggleAria);
+
       // Close on link click (in-page anchors)
       document.querySelectorAll('#mobileMenuPanel a').forEach(link => {
         link.addEventListener('click', () => {
           mobileMenuCheckbox.checked = false;
+          toggleAria();
         });
       });
 
       // Close on Escape
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') mobileMenuCheckbox.checked = false;
+        if (e.key === 'Escape') {
+          mobileMenuCheckbox.checked = false;
+          toggleAria();
+        }
       });
     } else if (mobileNavToggle && mobileMenuPanel) {
       mobileNavToggle.setAttribute('aria-controls', 'mobileMenuPanel');
