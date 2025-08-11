@@ -44,65 +44,173 @@
     }
     
     /**
-     * Mobile Nav Toggle
+     * Mobile Nav Toggle - Fixed and Improved
      */
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const navMenu = document.getElementById('navmenu');
-    const headerEl = document.getElementById('header');
-    if (mobileNavToggle && navMenu) {
-      mobileNavToggle.setAttribute('aria-controls', 'navmenu');
-      mobileNavToggle.setAttribute('aria-expanded', 'false');
+    const initMobileNavigation = () => {
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const navMenu = document.getElementById('navmenu');
+      const headerEl = document.getElementById('header');
+      
+      // Early return if required elements don't exist
+      if (!mobileNavToggle || !navMenu) {
+        console.warn('Mobile navigation elements not found');
+        return;
+      }
+
+      // Debounce function to prevent rapid clicking
+      let isAnimating = false;
+      const debounce = (func, delay) => {
+        let timeoutId;
+        return (...args) => {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => func.apply(null, args), delay);
+        };
+      };
+
+      // Store previous focus for accessibility
+      let previousFocus = null;
 
       const openNav = () => {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        // Store current focus
+        previousFocus = document.activeElement;
+        
+        // Update ARIA state
+        mobileNavToggle.setAttribute('aria-expanded', 'true');
+        
+        // Add body class
         document.body.classList.add('mobile-nav-active');
+        
+        // Show menu with proper classes
         navMenu.classList.add('is-open', 'translate-x-0', 'opacity-100', 'pointer-events-auto');
         navMenu.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
-        mobileNavToggle.setAttribute('aria-expanded', 'true');
+        
+        // Focus management - focus first focusable element in menu
+        const firstFocusable = navMenu.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
+        if (firstFocusable) {
+          firstFocusable.focus();
+        }
+        
+        // Reset animation flag after transition
+        setTimeout(() => {
+          isAnimating = false;
+        }, 300);
       };
 
       const closeNav = () => {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        // Update ARIA state
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+        
+        // Remove body class
         document.body.classList.remove('mobile-nav-active');
+        
+        // Hide menu
         navMenu.classList.remove('is-open', 'translate-x-0', 'opacity-100', 'pointer-events-auto');
         navMenu.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
-        mobileNavToggle.setAttribute('aria-expanded', 'false');
+        
+        // Restore focus to previous element
+        if (previousFocus && typeof previousFocus.focus === 'function') {
+          previousFocus.focus();
+        }
+        
+        // Reset animation flag after transition
+        setTimeout(() => {
+          isAnimating = false;
+        }, 300);
       };
 
-      mobileNavToggle.addEventListener('click', function(event) {
+      const toggleNav = debounce((event) => {
         event.preventDefault();
+        event.stopPropagation();
+        
         const isActive = document.body.classList.contains('mobile-nav-active');
+        
         if (isActive) {
           closeNav();
         } else {
           openNav();
         }
-      });
-      
-      // Smooth scroll with sticky header offset for in-page anchors
-      document.querySelectorAll('#navmenu a').forEach(navlink => {
-        navlink.addEventListener('click', (e) => {
-          const href = navlink.getAttribute('href');
-          if (href && href.startsWith('#')) {
-            const target = document.querySelector(href);
-            if (target) {
-              e.preventDefault();
-              const headerHeight = headerEl ? headerEl.offsetHeight : 0;
-              const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
-              window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-            }
-          }
-          if (document.body.classList.contains('mobile-nav-active')) {
-            closeNav();
-          }
-        });
-      });
+      }, 100);
 
-      // Close on Escape
+      // Event listeners
+      mobileNavToggle.addEventListener('click', toggleNav);
+      
+      // Close on Escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) {
           closeNav();
         }
       });
-    }
+
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (document.body.classList.contains('mobile-nav-active') && 
+            !navMenu.contains(e.target) && 
+            !mobileNavToggle.contains(e.target)) {
+          closeNav();
+        }
+      });
+
+      // Handle navigation link clicks
+      const handleNavLinkClick = (e) => {
+        const href = e.currentTarget.getAttribute('href');
+        
+        // Handle anchor links
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            
+            // Get header height safely
+            const headerHeight = headerEl ? headerEl.offsetHeight : 0;
+            const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
+            
+            // Smooth scroll with fallback
+            if ('scrollBehavior' in document.documentElement.style) {
+              window.scrollTo({ 
+                top: targetTop, 
+                behavior: prefersReducedMotion ? 'auto' : 'smooth' 
+              });
+            } else {
+              window.scrollTo(0, targetTop);
+            }
+          }
+        }
+        
+        // Close mobile menu if open
+        if (document.body.classList.contains('mobile-nav-active')) {
+          closeNav();
+        }
+      };
+
+      // Add click handlers to navigation links
+      const navLinks = navMenu.querySelectorAll('a[href^="#"]');
+      navLinks.forEach(link => {
+        link.addEventListener('click', handleNavLinkClick);
+      });
+
+      // Handle window resize
+      let resizeTimeout;
+      const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          // Close mobile menu on large screens
+          if (window.innerWidth >= 1280 && document.body.classList.contains('mobile-nav-active')) {
+            closeNav();
+          }
+        }, 250);
+      };
+
+      window.addEventListener('resize', handleResize);
+    };
+
+    // Initialize mobile navigation
+    initMobileNavigation();
     
     /**
      * Initiate GLightbox

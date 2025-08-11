@@ -247,9 +247,15 @@
 
       <div class="flex items-center space-x-4">
         <a class="hidden sm:inline-block btn btn-primary hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" href="#appointment">Make an Appointment</a>
-        <button class="xl:hidden flex items-center justify-center w-12 h-12 text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 transition-all duration-300 mobile-nav-toggle z-50 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu">
-          <svg class="w-6 h-6 open-icon transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-          <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        <button 
+          class="xl:hidden flex items-center justify-center w-12 h-12 text-heading bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:bg-white/30 hover:shadow-2xl hover:scale-105 transition-all duration-300 mobile-nav-toggle z-50 focus:outline-none focus:ring-4 focus:ring-accent/20 focus:ring-offset-2" 
+          aria-label="Toggle navigation menu"
+          aria-controls="navmenu"
+          aria-expanded="false"
+          type="button"
+          data-mobile-nav-toggle>
+          <svg class="w-6 h-6 open-icon transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+          <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>

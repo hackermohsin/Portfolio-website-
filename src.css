@@ -61,12 +61,93 @@
   .php-email-form .loading, .php-email-form .error-message, .php-email-form .sent-message { display: none; }
 
   /* Mobile navigation */
-  body.mobile-nav-active { @apply overflow-hidden; }
-  .mobile-nav-active #navmenu, #navmenu.is-open { --tw-translate-x: 0 !important; }
-  .mobile-nav-toggle .open-icon { display: block; }
-  .mobile-nav-toggle .close-icon { display: none; }
-  .mobile-nav-active .mobile-nav-toggle .open-icon { display: none; }
-  .mobile-nav-active .mobile-nav-toggle .close-icon { display: block; }
+  body.mobile-nav-active { 
+    @apply overflow-hidden; 
+  }
+  
+  .mobile-nav-active #navmenu, 
+  #navmenu.is-open { 
+    --tw-translate-x: 0;
+    transform: translateX(0);
+  }
+  
+  .mobile-nav-toggle .open-icon { 
+    display: block; 
+    opacity: 1;
+  }
+  
+  .mobile-nav-toggle .close-icon { 
+    display: none; 
+    opacity: 0;
+  }
+  
+  .mobile-nav-active .mobile-nav-toggle .open-icon { 
+    display: none; 
+    opacity: 0;
+  }
+  
+  .mobile-nav-active .mobile-nav-toggle .close-icon { 
+    display: block; 
+    opacity: 1;
+  }
+  
+  /* Smooth transitions for mobile nav */
+  #navmenu {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    will-change: transform, opacity;
+  }
+  
+  .mobile-nav-toggle svg {
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  /* Prevent body scroll when mobile nav is open */
+  body.mobile-nav-active {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Ensure mobile nav is above everything */
+  #navmenu {
+    z-index: 9999;
+  }
+  
+  /* Visual indicator for mobile nav state */
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-color: rgba(37, 99, 235, 0.3);
+    border-color: rgba(37, 99, 235, 0.5);
+  }
+  
+  .mobile-nav-toggle[aria-expanded="true"]:hover {
+    background-color: rgba(37, 99, 235, 0.4);
+  }
+  
+  /* Better touch targets for mobile */
+  @media (max-width: 1279px) {
+    #navmenu a {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+    }
+    
+    /* Loading state for mobile nav */
+    .mobile-nav-toggle.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    
+    .mobile-nav-toggle.loading svg {
+      animation: spin 1s linear infinite;
+    }
+  }
+  
+  /* Loading animation */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 
   /* FAQ Accordion */
   .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-in-out; }
