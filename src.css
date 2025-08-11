@@ -57,7 +57,7 @@
 
   /* Mobile navigation */
   body.mobile-nav-active { @apply overflow-hidden; }
-  .mobile-nav-active #navmenu { transform: translateX(0); }
+  .mobile-nav-active #navmenu { --tw-translate-x: 0; }
   .mobile-nav-toggle .open-icon { display: block; }
   .mobile-nav-toggle .close-icon { display: none; }
   .mobile-nav-active .mobile-nav-toggle .open-icon { display: none; }
