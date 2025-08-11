@@ -72,31 +72,74 @@
     @media (prefers-reduced-motion: reduce) {
       .pulsating-play-btn:before { animation: none !important; }
     }
+    
+    /* Mobile navigation icon states */
+    .mobile-nav-toggle .close-icon {
+      opacity: 0;
+      transform: rotate(-90deg);
+    }
+    
+    .mobile-nav-toggle .open-icon {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
+    
+    body.mobile-nav-active .mobile-nav-toggle .close-icon {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
+    
+    body.mobile-nav-active .mobile-nav-toggle .open-icon {
+      opacity: 0;
+      transform: rotate(90deg);
+    }
+    
+    /* Smooth transitions for mobile nav */
+    #navmenu {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    
+    /* Focus styles for accessibility */
+    .mobile-nav-toggle:focus-visible,
+    #navmenu button:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
   </style>
 </head>
 
 <body class="bg-white font-sans text-default">
 
-  <header id="header" class="sticky top-0 z-50 glass shadow-md transition-shadow duration-300">
-    <div class="container mx-auto px-4 flex items-center justify-between py-4">
-      <a href="index.html" class="flex items-center z-50"><h1 class="text-3xl font-bold text-heading">Medilab</h1></a>
+  <header id="header" class="sticky top-0 z-50 glass shadow-md hover:shadow-lg transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3 sm:py-4 lg:py-6">
+              <a href="index.html" class="flex items-center z-50 group">
+          <h1 class="text-3xl font-bold text-heading group-hover:text-accent transition-colors duration-300">Medilab</h1>
+        </a>
       
-      <nav id="navmenu" class="fixed inset-0 glass z-50 transform -translate-x-full opacity-0 pointer-events-none transition-transform transition-opacity duration-300 ease-in-out xl:relative xl:translate-x-0 xl:opacity-100 xl:pointer-events-auto xl:bg-transparent xl:inset-auto xl:z-auto">
-        <ul class="flex flex-col items-center justify-center h-full space-y-6 xl:flex-row xl:space-y-0 xl:space-x-6">
-          <li><a href="#hero" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">Home</a></li>
-          <li><a href="#about" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">About</a></li>
-          <li><a href="#services" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">Services</a></li>
-          <li><a href="#departments" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">Departments</a></li>
-          <li><a href="#doctors" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">Doctors</a></li>
-          <li><a href="#contact" class="text-2xl xl:text-base text-heading hover:text-accent transition duration-300">Contact</a></li>
+      <nav id="navmenu" class="fixed inset-0 glass z-50 transform -translate-x-full opacity-0 pointer-events-none transition-all duration-300 ease-in-out xl:relative xl:translate-x-0 xl:opacity-100 xl:pointer-events-auto xl:bg-transparent xl:inset-auto xl:z-auto">
+        <!-- Mobile close button -->
+        <button class="xl:hidden absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-heading hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" onclick="document.querySelector('.mobile-nav-toggle').click()" aria-label="Close navigation">
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        
+        <ul class="flex flex-col items-center justify-center h-full space-y-8 xl:flex-row xl:space-y-0 xl:space-x-8">
+          <li><a href="#hero" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Home</a></li>
+          <li><a href="#about" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">About</a></li>
+          <li><a href="#services" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Services</a></li>
+          <li><a href="#departments" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Departments</a></li>
+          <li><a href="#doctors" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Doctors</a></li>
+          <li><a href="#contact" class="text-2xl xl:text-base text-heading hover:text-accent transition-all duration-300 hover:scale-105 xl:hover:scale-100 xl:px-3 xl:py-2 xl:rounded-lg xl:hover:bg-accent/10">Contact</a></li>
         </ul>
       </nav>
 
-      <div class="flex items-center">
-        <a class="hidden sm:inline-block btn btn-primary" href="#appointment">Make an Appointment</a>
-        <button class="xl:hidden text-2xl text-heading mobile-nav-toggle z-50 ml-4">
-          <svg class="w-8 h-8 open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-          <svg class="w-8 h-8 close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      <div class="flex items-center space-x-4">
+        <a class="hidden sm:inline-block btn btn-primary hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" href="#appointment">Make an Appointment</a>
+        <button class="xl:hidden flex items-center justify-center w-10 h-10 text-heading hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 mobile-nav-toggle z-50 focus:outline-none focus:ring-2 focus:ring-accent/20 focus:ring-offset-2" aria-label="Toggle navigation menu">
+          <svg class="w-6 h-6 open-icon transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+          <svg class="w-6 h-6 close-icon absolute opacity-0 transition-all duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
     </div>
