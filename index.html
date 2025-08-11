@@ -101,18 +101,13 @@
       .pulsating-play-btn:before { animation: none !important; }
     }
 
-    /* Minimal dark mode fallbacks for common utility classes without editing each instance */
-    /* dark mode removed (forcing light theme) */
-    /* @media (prefers-color-scheme: dark) { */
-      .bg-white { background-color: #0f172a !important; }
-      .bg-white\/80 { background-color: rgba(255,255,255,0.05) !important; }
-    }
+    /* Removed dark overrides to force light theme */
   </style>
 </head>
 
 <body class="bg-white font-sans text-default">
 
-  <header id="header" class="sticky top-0 z-50 bg-white dark:bg-slate-900 shadow-md transition-shadow duration-300">
+  <header id="header" class="sticky top-0 z-50 bg-white shadow-md transition-shadow duration-300">
     <div class="container mx-auto px-4 flex items-center justify-between py-4">
       <a href="index.html" class="flex items-center z-50"><h1 class="text-3xl font-bold text-heading">Medilab</h1></a>
       
