@@ -46,12 +46,26 @@
     /**
      * Mobile Nav Toggle
      */
+    const mobileMenuCheckbox = document.getElementById('mobileMenuCheckbox');
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const mobileMenuPanel = document.getElementById('mobileMenuPanel');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
     const navMenu = document.getElementById('navmenu');
     const headerEl = document.getElementById('header');
-    if (mobileNavToggle && mobileMenuPanel) {
+
+    if (mobileMenuCheckbox) {
+      // Close on link click (in-page anchors)
+      document.querySelectorAll('#mobileMenuPanel a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenuCheckbox.checked = false;
+        });
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') mobileMenuCheckbox.checked = false;
+      });
+    } else if (mobileNavToggle && mobileMenuPanel) {
       mobileNavToggle.setAttribute('aria-controls', 'mobileMenuPanel');
       mobileNavToggle.setAttribute('aria-expanded', 'false');
 
@@ -77,7 +91,6 @@
         mobileNavToggle.setAttribute('aria-expanded', 'false');
       };
 
-      // Click outside panel closes menu
       if (mobileMenuOverlay) {
         mobileMenuOverlay.addEventListener('click', (e) => {
           const clickedInsidePanel = mobileMenuPanel.contains(e.target);
@@ -89,14 +102,9 @@
       mobileNavToggle.addEventListener('click', function(event) {
         event.preventDefault();
         const isActive = document.body.classList.contains('mobile-nav-active');
-        if (isActive) {
-          closeNav();
-        } else {
-          openNav();
-        }
+        if (isActive) closeNav(); else openNav();
       });
 
-      // Smooth scroll with sticky header offset for in-page anchors
       document.querySelectorAll('#navmenu a').forEach(navlink => {
         navlink.addEventListener('click', (e) => {
           const href = navlink.getAttribute('href');
@@ -109,28 +117,11 @@
               window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
             }
           }
-          if (document.body.classList.contains('mobile-nav-active')) {
-            closeNav();
-          }
+          if (document.body.classList.contains('mobile-nav-active')) closeNav();
         });
       });
 
-      // Close on Escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) {
-          closeNav();
-        }
-      });
-
-      // Click outside to close
-      document.addEventListener('click', (e) => {
-        if (!document.body.classList.contains('mobile-nav-active')) return;
-        const clickedInsidePanel = mobileMenuPanel.contains(e.target);
-        const clickedToggle = mobileNavToggle.contains(e.target);
-        if (!clickedInsidePanel && !clickedToggle) {
-          closeNav();
-        }
-      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) closeNav(); });
     }
     
     /**
