@@ -60,7 +60,7 @@
   </style>
 
     <!-- Built Tailwind CSS -->
-  <link href="main.css?v=5" rel="stylesheet">
+  <link href="main.css?v=6" rel="stylesheet">
   
   <!-- Vendor CSS Files -->
   <link href="aos.css" rel="stylesheet">
@@ -146,6 +146,12 @@
     }
 
     body.mobile-nav-active #mobileMenuPanel { animation: popIn 0.2s ease-out; }
+
+    /* Production-safe fallbacks for overlay/panel visibility & transitions */
+    #mobileMenuOverlay { z-index: 60; opacity: 0; visibility: hidden; pointer-events: none; background-color: rgba(15,23,42,0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: opacity .2s ease; }
+    body.mobile-nav-active #mobileMenuOverlay { opacity: 1; visibility: visible; pointer-events: auto; }
+    #mobileMenuPanel { opacity: 0; transform: translateY(-6px) scale(0.98); transition: opacity .2s ease, transform .2s ease; }
+    body.mobile-nav-active #mobileMenuPanel { opacity: 1; transform: translateY(0) scale(1); }
   </style>
 </head>
 
