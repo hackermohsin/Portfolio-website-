@@ -158,12 +158,18 @@
     #mobileMenuCheckbox:checked ~ #mobileMenuOverlay #mobileMenuPanel { opacity: 1; transform: translateY(0) scale(1); }
     #mobileMenuCheckbox:checked ~ * .mobile-nav-toggle .open-icon { opacity: 0; transform: rotate(90deg); }
     #mobileMenuCheckbox:checked ~ * .mobile-nav-toggle .close-icon { opacity: 1; transform: rotate(0deg); }
+
+    /* CSS-only scroll lock and icon states when menu is open */
+    #mobileMenuCheckbox:checked ~ #pageRoot { overflow: hidden; height: 100vh; }
+    #mobileMenuCheckbox:checked ~ * .mobile-nav-toggle .open-icon { opacity: 0; transform: rotate(90deg); }
+    #mobileMenuCheckbox:checked ~ * .mobile-nav-toggle .close-icon { opacity: 1; transform: rotate(0deg); }
   </style>
 </head>
 
 <body class="bg-white font-sans text-default">
 
   <input type="checkbox" id="mobileMenuCheckbox" class="hidden" />
+  <div id="pageRoot">
 
   <header id="header" class="sticky top-0 z-50 glass shadow-md hover:shadow-lg transition-all duration-300">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3 sm:py-4 lg:py-6">
@@ -524,6 +530,8 @@
         </div>
       </div>
     </div>
+  </div>
+
   </div>
 
   <!-- Vendor JS Files -->
