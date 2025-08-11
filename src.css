@@ -25,6 +25,7 @@
   .glass { @apply bg-white/60 backdrop-blur-lg border border-white/30 shadow-lg; }
   .glass-strong { @apply bg-white/70 backdrop-blur-2xl border border-white/40 shadow-xl; }
   .glass-dark { @apply bg-slate-900/70 backdrop-blur-lg border border-white/10 shadow-inner; }
+  .glass-hover { @apply transform transition duration-300 hover:-translate-y-1 hover:shadow-2xl; }
 
   /* Pulsating play button */
   .pulsating-play-btn { width: 94px; height: 94px; background: radial-gradient(#2563eb 50%, rgba(37, 99, 235, 0.4) 52%); border-radius: 50%; display: block; position: relative; overflow: hidden; }
@@ -43,7 +44,7 @@
   .php-email-form .loading, .php-email-form .error-message, .php-email-form .sent-message { display: none; }
 
   /* Mobile navigation */
-  body.mobile-nav-active { overflow: hidden; }
+  body.mobile-nav-active { @apply overflow-hidden; }
   .mobile-nav-active #navmenu { transform: translateX(0); }
   .mobile-nav-toggle .open-icon { display: block; }
   .mobile-nav-toggle .close-icon { display: none; }
