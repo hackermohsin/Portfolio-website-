@@ -1,41 +1,46 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+header('Content-Type: text/plain; charset=utf-8');
+// Basic input validation and sanitization
+function get_post($key, $default = '') {
+  return isset($_POST[$key]) ? trim((string)$_POST[$key]) : $default;
+}
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+$name = strip_tags(get_post('name'));
+$email = filter_var(get_post('email'), FILTER_SANITIZE_EMAIL);
+$subject = strip_tags(get_post('subject'));
+$message = strip_tags(get_post('message'));
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+if ($name === '' || $email === '' || $subject === '' || $message === '') {
+  http_response_code(400);
+  echo 'Missing required fields';
+  exit;
+}
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  http_response_code(400);
+  echo 'Invalid email address';
+  exit;
+}
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+$to = getenv('CONTACT_TO') ?: 'mohsinhayat216@gmail.com';
+$email_subject = $subject;
+$email_body = "New contact message from Medilab website\n\n" .
+  "Name: $name\n" .
+  "Email: $email\n" .
+  "Subject: $subject\n" .
+  "Message:\n$message\n";
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+// Basic header injection guard
+$safe_from = str_replace(["\r", "\n"], '', $email);
+$headers = "From: $safe_from\r\n" .
+           "Reply-To: $safe_from\r\n" .
+           "X-Mailer: PHP/" . phpversion();
 
-  echo $contact->send();
+$sent = @mail($to, $email_subject, $email_body, $headers);
+
+// Also log to file as a fallback/audit
+@file_put_contents(__DIR__ . '/mail.log', date('c') . " CONTACT | $name <$email> | $subject\n", FILE_APPEND);
+
+// Always return OK for frontend UX; operators can monitor mail.log if mail() is blocked
+echo 'OK';
 ?>

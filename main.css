@@ -1,0 +1,10 @@
+/* Minimal CSS additions for form status visibility */
+.php-email-form .loading,
+.php-email-form .error-message,
+.php-email-form .sent-message {
+  display: none;
+}
+
+.d-block {
+  display: block !important;
+}
