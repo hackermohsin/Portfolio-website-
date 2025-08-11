@@ -24,7 +24,41 @@
   /* Frosted glass utilities */
   .glass { @apply bg-white/60 backdrop-blur-lg border border-white/30 shadow-lg; }
   .glass-strong { @apply bg-white/70 backdrop-blur-2xl border border-white/40 shadow-xl; }
+
+  /* Pulsating play button */
+  .pulsating-play-btn { width: 94px; height: 94px; background: radial-gradient(#2563eb 50%, rgba(37, 99, 235, 0.4) 52%); border-radius: 50%; display: block; position: relative; overflow: hidden; }
+  .pulsating-play-btn:before { content: ""; position: absolute; width: 120px; height: 120px; animation: pulsate-play-btn 2s infinite; border-radius: 50%; border: 5px solid rgba(37, 99, 235, 0.7); top: -15%; left: -15%; }
+  .pulsating-play-btn:after { content: ""; position: absolute; left: 50%; top: 50%; transform: translateX(-40%) translateY(-50%); width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid #fff; z-index: 100; }
+
+  /* Section title underline */
+  .section-title h2::after { content: ''; position: absolute; display: block; width: 60px; height: 3px; background: #2563eb; left: 0; right: 0; bottom: 0; margin: auto; }
+
+  /* Departments tabs */
+  .departments .nav-link.active { border-color: #2563eb; color: #2563eb; }
+  .departments .tab-pane { display: none; }
+  .departments .tab-pane.active.show { display: block; }
+
+  /* Forms messages */
+  .php-email-form .loading, .php-email-form .error-message, .php-email-form .sent-message { display: none; }
+
+  /* Mobile navigation */
+  body.mobile-nav-active { overflow: hidden; }
+  .mobile-nav-active #navmenu { transform: translateX(0); }
+  .mobile-nav-toggle .open-icon { display: block; }
+  .mobile-nav-toggle .close-icon { display: none; }
+  .mobile-nav-active .mobile-nav-toggle .open-icon { display: none; }
+  .mobile-nav-active .mobile-nav-toggle .close-icon { display: block; }
+
+  /* FAQ Accordion */
+  .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease-in-out; }
+  .faq-item.faq-active .faq-toggle .faq-icon { transform: rotate(180deg); }
+
+  /* Testimonials pagination */
+  .testimonials .swiper-pagination .swiper-pagination-bullet { background-color: #dbeafe; }
+  .testimonials .swiper-pagination .swiper-pagination-bullet-active { background-color: #2563eb; }
 }
+
+@keyframes pulsate-play-btn { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
