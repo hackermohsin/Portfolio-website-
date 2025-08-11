@@ -4,7 +4,16 @@
 
 @layer base {
   html { @apply antialiased; }
-  body { @apply bg-background text-default; }
+  body {
+    @apply bg-background text-default;
+    background-image:
+      radial-gradient(40% 60% at 10% 0%, rgba(37, 99, 235, 0.12) 0%, rgba(255, 255, 255, 0) 60%),
+      radial-gradient(35% 55% at 90% 100%, rgba(16, 185, 129, 0.10) 0%, rgba(255, 255, 255, 0) 60%),
+      linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
   h1, h2, h3, h4 { @apply text-heading tracking-tight; }
   h1 { @apply text-4xl md:text-5xl font-extrabold; }
   h2 { @apply text-3xl md:text-4xl font-semibold; }
