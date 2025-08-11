@@ -17,16 +17,9 @@
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Vendor CSS Files -->
-  <link href="aos.css" rel="stylesheet">
-  <link href="glightbox.min.css" rel="stylesheet">
-  <link href="swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Custom Tailwind Config -->
+  <!-- Custom Tailwind Config (must be before CDN) -->
   <script>
+    tailwind = window.tailwind || {};
     tailwind.config = {
       darkMode: 'media',
       theme: {
@@ -44,7 +37,7 @@
     }
   </script>
 
-  <!-- Tailwind component layer for consistent UI -->
+  <!-- Tailwind component layer for consistent UI (must be before CDN) -->
   <style type="text/tailwindcss">
     @layer base {
       html { @apply antialiased; }
@@ -65,6 +58,14 @@
       .section-title h2 { @apply pb-5; }
     }
   </style>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Vendor CSS Files -->
+  <link href="aos.css" rel="stylesheet">
+  <link href="glightbox.min.css" rel="stylesheet">
+  <link href="swiper-bundle.min.css" rel="stylesheet">
 
   <style>
     /* Custom styles for components and utilities */
