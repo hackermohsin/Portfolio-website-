@@ -5,6 +5,7 @@
    * Function to run after the DOM is ready
    */
   const onDOMContentLoaded = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     /**
      * Preloader
@@ -36,7 +37,7 @@
         e.preventDefault();
         window.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
       });
     }
@@ -72,9 +73,9 @@
      */
     if (document.querySelector('.testimonials .swiper')) {
       new Swiper('.testimonials .swiper', {
-        loop: true,
-        speed: 600,
-        autoplay: {
+        loop: !prefersReducedMotion,
+        speed: prefersReducedMotion ? 0 : 600,
+        autoplay: prefersReducedMotion ? false : {
           delay: 5000,
           disableOnInteraction: false,
         },
@@ -85,14 +86,8 @@
           clickable: true
         },
         breakpoints: {
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20
-          },
-          1200: {
-            slidesPerView: 2,
-            spaceBetween: 20
-          }
+          320: { slidesPerView: 1, spaceBetween: 20 },
+          1200: { slidesPerView: 2, spaceBetween: 20 }
         }
       });
     }
@@ -100,7 +95,10 @@
     /**
      * Initiate Pure Counter
      */
-    new PureCounter();
+    new PureCounter({
+      once: prefersReducedMotion,
+      pulse: prefersReducedMotion ? 0 : 2
+    });
     
     /**
      * FAQ Accordion Logic
@@ -144,10 +142,11 @@
      * Init AOS (Animation on Scroll)
      */
     AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
+      duration: prefersReducedMotion ? 0 : 1000,
+      easing: prefersReducedMotion ? 'linear' : 'ease-in-out',
       once: true,
-      mirror: false
+      mirror: false,
+      disable: prefersReducedMotion
     });
   };
   
