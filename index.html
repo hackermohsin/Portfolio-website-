@@ -171,7 +171,7 @@
         </ul>
 
         <!-- Mobile dropdown panel -->
-        <div id="mobileMenuPanel" class="xl:hidden absolute right-0 top-full mt-3 w-80 sm:w-96 max-w-full rounded-2xl bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 invisible pointer-events-none -translate-y-2 scale-95 transition-all duration-200">
+        <div id="mobileMenuPanel" class="xl:hidden absolute top-full mt-3 left-4 right-4 sm:left-auto sm:right-0 sm:w-96 max-w-full rounded-2xl bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 invisible pointer-events-none -translate-y-2 scale-95 transition-all duration-200 z-50">
           <div class="py-2">
             <a href="#hero" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Home</a>
             <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">About</a>
@@ -184,6 +184,9 @@
             </div>
           </div>
         </div>
+
+        <!-- Backdrop for mobile dropdown -->
+        <div id="mobileMenuBackdrop" class="xl:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 invisible pointer-events-none transition-opacity duration-200 z-40"></div>
 
       </nav>
 
