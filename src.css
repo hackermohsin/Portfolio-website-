@@ -30,10 +30,10 @@
   .input { @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition; }
   .section-title h2 { @apply pb-5; }
 
-  /* Frosted glass utilities (responsive blur for performance) */
-  .glass { @apply bg-white/55 md:bg-white/60 backdrop-blur-none md:backdrop-blur-lg border border-white/30 shadow; }
-  .glass-strong { @apply bg-white/65 md:bg-white/70 backdrop-blur-sm md:backdrop-blur-2xl border border-white/40 shadow-lg; }
-  .glass-dark { @apply bg-slate-900/70 md:bg-slate-900/70 backdrop-blur-none md:backdrop-blur-lg border border-white/10 shadow-inner; }
+  /* Frosted glass utilities (consistent blur across breakpoints) */
+  .glass { @apply bg-white/60 backdrop-blur-lg border border-white/30 shadow; }
+  .glass-strong { @apply bg-white/70 backdrop-blur-2xl border border-white/40 shadow-lg; }
+  .glass-dark { @apply bg-slate-900/70 backdrop-blur-lg border border-white/10 shadow-inner; }
   .glass-hover { @apply transform transition duration-300 hover:-translate-y-1 hover:shadow-2xl; }
 
   /* Content visibility utility to boost scroll performance */
