@@ -54,15 +54,15 @@
 
       const openNav = () => {
         document.body.classList.add('mobile-nav-active');
-        navMenu.classList.add('is-open', 'translate-x-0');
-        navMenu.classList.remove('-translate-x-full');
+        navMenu.classList.add('is-open', 'translate-x-0', 'opacity-100', 'pointer-events-auto');
+        navMenu.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
         mobileNavToggle.setAttribute('aria-expanded', 'true');
       };
 
       const closeNav = () => {
         document.body.classList.remove('mobile-nav-active');
-        navMenu.classList.remove('is-open', 'translate-x-0');
-        navMenu.classList.add('-translate-x-full');
+        navMenu.classList.remove('is-open', 'translate-x-0', 'opacity-100', 'pointer-events-auto');
+        navMenu.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
         mobileNavToggle.setAttribute('aria-expanded', 'false');
       };
 
@@ -82,6 +82,13 @@
             closeNav();
           }
         });
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) {
+          closeNav();
+        }
       });
     }
     
