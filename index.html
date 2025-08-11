@@ -139,15 +139,13 @@
       outline-offset: 2px;
     }
     
-    /* Smooth entrance animation for mobile dropdown */
+    /* Smooth entrance animation for mobile overlay */
     @keyframes popIn {
-      0% { transform: translateY(-8px) scale(0.98); opacity: 0; }
+      0% { transform: translateY(-6px) scale(0.98); opacity: 0; }
       100% { transform: translateY(0) scale(1); opacity: 1; }
     }
 
-    body.mobile-nav-active #mobileMenuPanel {
-      animation: popIn 0.18s ease-out;
-    }
+    body.mobile-nav-active #mobileMenuPanel { animation: popIn 0.2s ease-out; }
   </style>
 </head>
 
@@ -171,22 +169,23 @@
         </ul>
 
         <!-- Mobile dropdown panel -->
-        <div id="mobileMenuPanel" class="xl:hidden absolute top-full mt-3 left-4 right-4 sm:left-auto sm:right-0 sm:w-96 max-w-full rounded-2xl bg-white/80 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 invisible pointer-events-none -translate-y-2 scale-95 transition-all duration-200 z-50">
-          <div class="py-2">
-            <a href="#hero" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Home</a>
-            <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">About</a>
-            <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Services</a>
-            <a href="#departments" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Departments</a>
-            <a href="#doctors" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Doctors</a>
-            <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Contact</a>
-            <div class="px-4 pt-2">
-              <a class="btn btn-primary w-full" href="#appointment">Make an Appointment</a>
+        <div id="mobileMenuOverlay" class="xl:hidden fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-md opacity-0 invisible pointer-events-none transition-opacity duration-200">
+          <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div id="mobileMenuPanel" class="w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-xl border border-slate-200/60 shadow-2xl ring-1 ring-black/5 p-2 opacity-0 -translate-y-2 scale-95 transition-all duration-200">
+              <div class="py-2 flex flex-col">
+                <a href="#hero" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Home</a>
+                <a href="#about" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">About</a>
+                <a href="#services" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Services</a>
+                <a href="#departments" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Departments</a>
+                <a href="#doctors" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Doctors</a>
+                <a href="#contact" class="flex items-center gap-3 px-4 py-3 rounded-xl text-heading hover:bg-accent/10 hover:text-accent transition">Contact</a>
+                <div class="px-4 pt-2">
+                  <a class="btn btn-primary w-full" href="#appointment">Make an Appointment</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- Backdrop for mobile dropdown -->
-        <div id="mobileMenuBackdrop" class="xl:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 invisible pointer-events-none transition-opacity duration-200 z-40"></div>
 
       </nav>
 

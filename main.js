@@ -48,7 +48,7 @@
      */
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const mobileMenuPanel = document.getElementById('mobileMenuPanel');
-    const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
     const navMenu = document.getElementById('navmenu');
     const headerEl = document.getElementById('header');
     if (mobileNavToggle && mobileMenuPanel) {
@@ -57,29 +57,33 @@
 
       const openNav = () => {
         document.body.classList.add('mobile-nav-active');
-        mobileMenuPanel.classList.remove('opacity-0', 'invisible', 'pointer-events-none', '-translate-y-2', 'scale-95');
-        mobileMenuPanel.classList.add('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0', 'scale-100');
-        if (mobileMenuBackdrop) {
-          mobileMenuBackdrop.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
-          mobileMenuBackdrop.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+        if (mobileMenuOverlay) {
+          mobileMenuOverlay.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+          mobileMenuOverlay.classList.add('opacity-100', 'visible', 'pointer-events-auto');
         }
+        mobileMenuPanel.classList.remove('opacity-0', '-translate-y-2', 'scale-95');
+        mobileMenuPanel.classList.add('opacity-100', 'translate-y-0', 'scale-100');
         mobileNavToggle.setAttribute('aria-expanded', 'true');
       };
 
       const closeNav = () => {
         document.body.classList.remove('mobile-nav-active');
-        mobileMenuPanel.classList.remove('opacity-100', 'visible', 'pointer-events-auto', 'translate-y-0', 'scale-100');
-        mobileMenuPanel.classList.add('opacity-0', 'invisible', 'pointer-events-none', '-translate-y-2', 'scale-95');
-        if (mobileMenuBackdrop) {
-          mobileMenuBackdrop.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
-          mobileMenuBackdrop.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+        if (mobileMenuOverlay) {
+          mobileMenuOverlay.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+          mobileMenuOverlay.classList.add('opacity-0', 'invisible', 'pointer-events-none');
         }
+        mobileMenuPanel.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+        mobileMenuPanel.classList.add('opacity-0', '-translate-y-2', 'scale-95');
         mobileNavToggle.setAttribute('aria-expanded', 'false');
       };
 
-      // Backdrop click closes menu
-      if (mobileMenuBackdrop) {
-        mobileMenuBackdrop.addEventListener('click', closeNav);
+      // Click outside panel closes menu
+      if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', (e) => {
+          const clickedInsidePanel = mobileMenuPanel.contains(e.target);
+          const clickedToggle = mobileNavToggle.contains(e.target);
+          if (!clickedInsidePanel && !clickedToggle) closeNav();
+        });
       }
 
       mobileNavToggle.addEventListener('click', function(event) {
