@@ -6,6 +6,7 @@
    */
   const onDOMContentLoaded = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
     
     /**
      * Preloader
@@ -31,8 +32,8 @@
           scrollTop.classList.add('invisible', 'opacity-0');
         }
       }
-      window.addEventListener('load', togglescrollTop);
-      document.addEventListener('scroll', togglescrollTop);
+      window.addEventListener('load', togglescrollTop, { passive: true });
+      document.addEventListener('scroll', togglescrollTop, { passive: true });
       scrollTop.addEventListener('click', (e) => {
         e.preventDefault();
         window.scrollTo({
@@ -64,21 +65,21 @@
     /**
      * Initiate GLightbox
      */
-    GLightbox({
-      selector: '.glightbox'
-    });
+    GLightbox({ selector: '.glightbox' });
     
     /**
      * Init Testimonials Swiper Slider
      */
     if (document.querySelector('.testimonials .swiper')) {
+      const autoplayConfig = (prefersReducedMotion || isMobile) ? false : {
+        delay: 4500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      };
       new Swiper('.testimonials .swiper', {
-        loop: !prefersReducedMotion,
-        speed: prefersReducedMotion ? 0 : 600,
-        autoplay: prefersReducedMotion ? false : {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
+        loop: !(prefersReducedMotion || isMobile),
+        speed: prefersReducedMotion ? 0 : (isMobile ? 350 : 450),
+        autoplay: autoplayConfig,
         slidesPerView: 'auto',
         pagination: {
           el: '.swiper-pagination',
@@ -86,7 +87,7 @@
           clickable: true
         },
         breakpoints: {
-          320: { slidesPerView: 1, spaceBetween: 20 },
+          320: { slidesPerView: 1, spaceBetween: 16 },
           1200: { slidesPerView: 2, spaceBetween: 20 }
         }
       });
@@ -96,7 +97,7 @@
      * Initiate Pure Counter
      */
     new PureCounter({
-      once: prefersReducedMotion,
+      once: prefersReducedMotion || isMobile,
       pulse: prefersReducedMotion ? 0 : 2
     });
     
@@ -142,11 +143,11 @@
      * Init AOS (Animation on Scroll)
      */
     AOS.init({
-      duration: prefersReducedMotion ? 0 : 1000,
-      easing: prefersReducedMotion ? 'linear' : 'ease-in-out',
+      duration: prefersReducedMotion ? 0 : 600,
+      easing: prefersReducedMotion ? 'linear' : 'ease-out',
       once: true,
       mirror: false,
-      disable: prefersReducedMotion
+      disable: prefersReducedMotion || isMobile
     });
   };
   
